@@ -1,12 +1,12 @@
 /* ========================================
-   FUTURISTIC - Neon Glows & Glassmorphism
+   FUTURISTIC - Enhanced Neon & Glassmorphism
    ======================================== */
 
 body.futuristic {
   --bg: #050510;
-  --card-bg: rgba(20, 20, 40, 0.7);
+  --card-bg: rgba(20, 20, 40, 0.6);
   --card-bg-hover: rgba(40, 40, 80, 0.8);
-  --card-border: rgba(100, 100, 255, 0.2);
+  --card-border: rgba(100, 100, 255, 0.15);
   --text: #e0e0ff;
   --text-muted: #8888aa;
   --accent: #6366f1;
@@ -14,58 +14,159 @@ body.futuristic {
   --success: #22d3ee;
   --warning: #f472b6;
   --glow: rgba(99, 102, 241, 0.4);
+  --glow-strong: rgba(99, 102, 241, 0.6);
 }
 
 body.futuristic {
   background: 
-    radial-gradient(ellipse at top, #1a1a3a 0%, transparent 50%),
-    radial-gradient(ellipse at bottom right, #0a0a2a 0%, transparent 50%),
-    var(--bg);
+    radial-gradient(ellipse at 20% 20%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 80%, rgba(34, 211, 238, 0.1) 0%, transparent 50%),
+    linear-gradient(180deg, #0a0a1a 0%, #050510 100%);
   background-color: var(--bg);
+  background-attachment: fixed;
 }
 
-/* Neon glow effects */
+/* Glowing text effects */
 body.futuristic .stat-value,
 body.futuristic header h1 {
   background: linear-gradient(135deg, #6366f1, #22d3ee);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  text-shadow: 0 0 30px var(--glow);
+  filter: drop-shadow(0 0 20px var(--glow));
+  animation: text-glow 3s ease-in-out infinite;
 }
 
-body.futuristic .agent-avatar {
-  box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow);
-  animation: pulse-glow 2s infinite;
+@keyframes text-glow {
+  0%, 100% { filter: drop-shadow(0 0 20px var(--glow)); }
+  50% { filter: drop-shadow(0 0 30px var(--glow-strong)); }
 }
 
-@keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 20px var(--glow); }
-  50% { box-shadow: 0 0 30px var(--glow), 0 0 50px var(--glow); }
+/* Neon avatar with pulse */
+body.futuristic .agent-avatar,
+body.futuristic .agent-avatar-sm {
+  box-shadow: 
+    0 0 20px var(--glow),
+    0 0 40px var(--glow),
+    inset 0 0 20px rgba(255, 255, 255, 0.1);
+  animation: neon-pulse 2s ease-in-out infinite;
+  border: 2px solid rgba(255, 255, 255, 0.2);
 }
 
-body.futuristic .time {
-  color: var(--success);
-  text-shadow: 0 0 10px var(--success), 0 0 20px var(--success);
+@keyframes neon-pulse {
+  0%, 100% { 
+    box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow);
+  }
+  50% { 
+    box-shadow: 0 0 30px var(--glow-strong), 0 0 60px var(--glow), 0 0 80px var(--glow);
+  }
 }
 
-/* Futuristic card hover */
-body.futuristic .agent-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 40px var(--glow), 0 20px 60px rgba(0, 0, 0, 0.5);
+/* Glass morphism cards */
+body.futuristic .stat-card,
+body.futuristic .agent-card,
+body.futuristic .agent-card-compact,
+body.futuristic .deploy-card,
+body.futuristic .project-card,
+body.futuristic .activity-item,
+body.futuristic .quick-stat {
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--card-border);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.futuristic .agent-card:hover,
+body.futuristic .agent-card-compact:hover {
+  transform: translateY(-6px) scale(1.02);
   border-color: var(--accent);
+  box-shadow: 
+    0 0 40px var(--glow),
+    0 20px 60px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 
 body.futuristic .stat-card:hover {
-  transform: scale(1.03);
-  box-shadow: 0 0 30px var(--glow);
+  transform: scale(1.05);
+  box-shadow: 0 0 50px var(--glow);
 }
 
-/* Action button glow */
-body.futuristic .action-btn:hover {
-  box-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow);
+/* Animated background grid */
+body.futuristic::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: 
+    linear-gradient(rgba(99, 102, 241, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(99, 102, 241, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+  pointer-events: none;
+  z-index: 0;
 }
 
-body.futuristic .action-btn:active {
+body.futuristic .dashboard {
+  position: relative;
+  z-index: 1;
+}
+
+/* Glowing time display */
+body.futuristic .time {
+  color: var(--success);
+  text-shadow: 
+    0 0 10px var(--success),
+    0 0 20px var(--success),
+    0 0 40px var(--success);
+  font-weight: bold;
+}
+
+/* Action button with glow trail */
+body.futuristic .action-btn {
+  background: linear-gradient(135deg, var(--accent), #8b5cf6);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 20px var(--glow);
+  transition: all 0.3s ease;
+}
+
+body.futuristic .action-btn:hover:not(:disabled) {
+  transform: translateY(-4px) scale(1.02);
+  box-shadow: 
+    0 0 30px var(--glow),
+    0 0 60px var(--glow),
+    0 10px 40px rgba(0, 0, 0, 0.3);
+}
+
+body.futuristic .action-btn:active:not(:disabled) {
   transform: scale(0.95);
+  box-shadow: 0 0 15px var(--glow);
+}
+
+/* Floating animation for activity items */
+body.futuristic .activity-item {
+  animation: float 3s ease-in-out infinite;
+}
+
+body.futuristic .activity-item:nth-child(odd) {
+  animation-delay: -1.5s;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
+
+/* Status dot glow */
+body.futuristic .status-dot.online {
+  box-shadow: 0 0 10px var(--success), 0 0 20px var(--success);
+  background: var(--success);
+}
+
+body.futuristic .status-dot.waiting {
+  box-shadow: 0 0 10px var(--warning), 0 0 20px var(--warning);
+  background: var(--warning);
 }

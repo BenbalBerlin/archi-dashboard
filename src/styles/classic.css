@@ -1,5 +1,5 @@
 /* ========================================
-   CLASSIC DARK - Default Design
+   CLASSIC DARK - Enhanced with animations
    ======================================== */
 
 body.classic {
@@ -12,6 +12,8 @@ body.classic {
   --accent: #3b82f6;
   --accent-hover: #2563eb;
   --glow: rgba(59, 130, 246, 0.3);
+  --success: #10b981;
+  --warning: #f59e0b;
 }
 
 body.classic {
@@ -19,16 +21,79 @@ body.classic {
   color: var(--text);
 }
 
-/* Card hover animations */
-body.classic .agent-card:hover {
-  transform: translateY(-4px);
+/* Card base styles */
+body.classic .stat-card,
+body.classic .agent-card,
+body.classic .agent-card-compact,
+body.classic .deploy-card,
+body.classic .project-card,
+body.classic .activity-item,
+body.classic .quick-stat {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover animations */
+body.classic .agent-card:hover,
+body.classic .agent-card-compact:hover {
+  transform: translateY(-4px) scale(1.01);
   box-shadow: 0 10px 40px var(--glow);
+  border-color: var(--accent);
 }
 
 body.classic .stat-card:hover {
-  transform: scale(1.02);
+  transform: translateY(-2px) scale(1.02);
+  box-shadow: 0 8px 30px var(--glow);
 }
 
-body.classic .action-btn:active {
-  transform: scale(0.95);
+body.classic .project-card:hover,
+body.classic .deploy-card:hover {
+  transform: translateX(4px);
+  border-color: var(--accent);
+}
+
+/* Button animations */
+body.classic .action-btn {
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+body.classic .action-btn:hover:not(:disabled) {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px var(--glow);
+}
+
+body.classic .action-btn:active:not(:disabled) {
+  transform: scale(0.95) translateY(0);
+}
+
+/* Staggered entrance animation */
+body.classic .stat-card:nth-child(1) { animation: fadeInUp 0.5s ease forwards; animation-delay: 0.1s; }
+body.classic .stat-card:nth-child(2) { animation: fadeInUp 0.5s ease forwards; animation-delay: 0.2s; }
+body.classic .stat-card:nth-child(3) { animation: fadeInUp 0.5s ease forwards; animation-delay: 0.3s; }
+body.classic .stat-card:nth-child(4) { animation: fadeInUp 0.5s ease forwards; animation-delay: 0.4s; }
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Status indicator pulse */
+body.classic .status-dot {
+  animation: pulse-dot 2s infinite;
+}
+
+@keyframes pulse-dot {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* Quick stat hover */
+body.classic .quick-stat:hover {
+  transform: scale(1.05);
+  background: var(--card-bg-hover);
 }

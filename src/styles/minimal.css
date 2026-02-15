@@ -1,5 +1,5 @@
 /* ========================================
-   MINIMAL - Clean & Focus
+   MINIMAL - Clean & Focus Enhanced
    ======================================== */
 
 body.minimal {
@@ -16,45 +16,84 @@ body.minimal {
 body.minimal {
   background: var(--bg);
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body.minimal .dashboard {
   max-width: 1200px;
 }
 
+/* Typography */
 body.minimal header h1 {
   font-size: 1.5rem;
   font-weight: 600;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.03em;
 }
 
 body.minimal .subtitle {
   display: none;
 }
 
-body.minimal .stat-value {
-  font-size: 2rem;
-  font-weight: 600;
-  letter-spacing: -0.03em;
-  color: var(--text);
+/* Clean cards with subtle shadow */
+body.minimal .stat-card,
+body.minimal .agent-card,
+body.minimal .agent-card-compact,
+body.minimal .deploy-card,
+body.minimal .project-card,
+body.minimal .activity-item,
+body.minimal .quick-stat {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: all 0.2s ease;
+}
+
+body.minimal .agent-card:hover,
+body.minimal .agent-card-compact:hover,
+body.minimal .stat-card:hover {
+  background: var(--card-bg-hover);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+body.minimal .project-card:hover,
+body.minimal .deploy-card:hover {
+  background: var(--card-bg-hover);
+}
+
+/* Minimal avatar */
+body.minimal .agent-avatar,
+body.minimal .agent-avatar-sm {
+  border-radius: 8px;
+  font-weight: 500;
 }
 
 body.minimal .agent-avatar {
-  width: 36px;
-  height: 36px;
+  width: 40px;
+  height: 40px;
   font-size: 0.875rem;
 }
 
-/* Minimal hover - subtle */
-body.minimal .agent-card:hover {
-  background: var(--card-bg-hover);
-  transform: translateY(-2px);
+body.minimal .agent-avatar-sm {
+  width: 32px;
+  height: 32px;
+  font-size: 0.75rem;
 }
 
-body.minimal .stat-card:hover {
-  background: var(--card-bg-hover);
+/* Clean stat values */
+body.minimal .stat-value {
+  font-size: 1.75rem;
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  color: var(--text);
 }
 
+body.minimal .stat-label {
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+/* Minimal buttons */
 body.minimal .action-btn {
   background: var(--text);
   color: var(--bg);
@@ -62,13 +101,43 @@ body.minimal .action-btn {
   border-radius: 6px;
   font-size: 0.8125rem;
   font-weight: 500;
-  transition: opacity 0.2s;
+  letter-spacing: -0.01em;
+  transition: all 0.15s ease;
+  border: none;
 }
 
-body.minimal .action-btn:hover {
-  opacity: 0.8;
+body.minimal .action-btn:hover:not(:disabled) {
+  opacity: 0.85;
+  transform: translateY(-1px);
 }
 
-body.minimal .action-btn:active {
-  transform: scale(0.97);
+body.minimal .action-btn:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+/* Minimal toggle */
+body.minimal .design-toggle {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+}
+
+body.minimal .design-toggle button {
+  font-weight: 500;
+  font-size: 0.7rem;
+}
+
+body.minimal .design-toggle button.active {
+  background: var(--accent);
+  color: white;
+}
+
+/* Clean footer */
+body.minimal footer {
+  border-top: 1px solid var(--card-border);
+  padding-top: 1.5rem;
+}
+
+/* Subtle hover for activity */
+body.minimal .activity-item:hover {
+  background: var(--card-bg-hover);
 }
