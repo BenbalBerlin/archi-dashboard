@@ -1,8 +1,9 @@
-/* Base Styles */
+/* Base Styles - Default to Classic */
 :root {
   --bg: #0f172a;
   --card-bg: #1e293b;
   --card-bg-hover: #334155;
+  --card-border: #334155;
   --text: #f1f5f9;
   --text-muted: #94a3b8;
   --accent: #3b82f6;
@@ -20,6 +21,7 @@ body {
   background: var(--bg);
   color: var(--text);
   min-height: 100vh;
+  transition: background 0.3s, color 0.3s;
 }
 
 .dashboard {
@@ -34,7 +36,7 @@ header {
   align-items: center;
   margin-bottom: 2rem;
   padding-bottom: 1rem;
-  border-bottom: 1px solid #334155;
+  border-bottom: 1px solid var(--card-border);
 }
 
 .header-left h1 {
@@ -106,7 +108,12 @@ main {
   padding: 1.25rem;
   border-radius: 12px;
   text-align: center;
-  border: 1px solid #334155;
+  border: 1px solid var(--card-border);
+  transition: all 0.3s;
+}
+
+.stat-card:hover {
+  background: var(--card-bg-hover);
 }
 
 .stat-value {
@@ -143,8 +150,8 @@ section h2 {
   border-radius: 12px;
   display: flex;
   gap: 1rem;
-  border: 1px solid #334155;
-  transition: transform 0.2s, border-color 0.2s;
+  border: 1px solid var(--card-border);
+  transition: all 0.3s;
 }
 
 .agent-card:hover {
@@ -202,7 +209,6 @@ section h2 {
 
 .agent-meta .time {
   font-size: 0.75rem;
-  color: var(--text-muted);
 }
 
 .two-col {
@@ -224,7 +230,7 @@ section h2 {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid #334155;
+  border: 1px solid var(--card-border);
 }
 
 .deploy-info h3, .project-info h3 {
@@ -289,12 +295,11 @@ section h2 {
   border-radius: 10px;
   font-size: 0.875rem;
   cursor: pointer;
-  transition: transform 0.2s, opacity 0.2s, background 0.2s;
+  transition: all 0.2s;
 }
 
 .action-btn:hover {
   transform: translateY(-2px);
-  opacity: 0.9;
   background: var(--accent-hover);
 }
 

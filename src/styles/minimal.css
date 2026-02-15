@@ -5,6 +5,7 @@
 body.minimal {
   --bg: #ffffff;
   --card-bg: #fafafa;
+  --card-bg-hover: #f0f0f0;
   --card-border: #e5e5e5;
   --text: #171717;
   --text-muted: #737373;
@@ -21,10 +22,6 @@ body.minimal .dashboard {
   max-width: 1200px;
 }
 
-body.minimal header {
-  border-bottom-color: var(--card-border);
-}
-
 body.minimal header h1 {
   font-size: 1.5rem;
   font-weight: 600;
@@ -35,30 +32,6 @@ body.minimal .subtitle {
   display: none;
 }
 
-body.minimal .time {
-  font-weight: 500;
-  color: var(--text);
-}
-
-body.minimal .design-toggle {
-  background: var(--card-bg);
-  border: 1px solid var(--card-border);
-}
-
-body.minimal .design-toggle button {
-  color: var(--text-muted);
-  font-weight: 500;
-}
-
-body.minimal .design-toggle button.active {
-  background: var(--accent);
-}
-
-body.minimal .stat-card {
-  padding: 1.5rem;
-  border-radius: 8px;
-}
-
 body.minimal .stat-value {
   font-size: 2rem;
   font-weight: 600;
@@ -66,39 +39,10 @@ body.minimal .stat-value {
   color: var(--text);
 }
 
-body.minimal .stat-label {
-  font-size: 0.75rem;
-  margin-top: 0.25rem;
-}
-
-body.minimal section h2 {
-  font-size: 0.75rem;
-  letter-spacing: 0.1em;
-  font-weight: 500;
-}
-
-body.minimal .agent-grid {
-  gap: 0.75rem;
-}
-
-body.minimal .agent-card {
-  padding: 1rem;
-  border-radius: 8px;
-}
-
 body.minimal .agent-avatar {
   width: 36px;
   height: 36px;
   font-size: 0.875rem;
-}
-
-body.minimal .agent-info h3 {
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-body.minimal .action-grid {
-  gap: 0.5rem;
 }
 
 body.minimal .action-btn {
@@ -108,8 +52,4 @@ body.minimal .action-btn {
   border-radius: 6px;
   font-size: 0.8125rem;
   font-weight: 500;
-}
-
-body.minimal footer {
-  border-top-color: var(--card-border);
 }

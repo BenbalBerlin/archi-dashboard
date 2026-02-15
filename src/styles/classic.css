@@ -2,13 +2,18 @@
    CLASSIC DARK - Default Design
    ======================================== */
 
-body.classic,
-body:not(.futuristic):not(.minimal) {
+body.classic {
   --bg: #0f172a;
   --card-bg: #1e293b;
   --card-bg-hover: #334155;
+  --card-border: #334155;
   --text: #f1f5f9;
   --text-muted: #94a3b8;
   --accent: #3b82f6;
   --accent-hover: #2563eb;
+}
+
+body.classic {
+  background: var(--bg);
+  color: var(--text);
 }

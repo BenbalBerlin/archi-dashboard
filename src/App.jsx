@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
-import './styles/classic.css'
 import './App.css'
+import './styles/classic.css'
+import './styles/futuristic.css'
+import './styles/minimal.css'
 
 function App() {
   const [data, setData] = useState(null)
@@ -20,7 +22,10 @@ function App() {
   }, [])
 
   useEffect(() => {
-    document.body.className = design
+    // Remove all design classes first
+    document.body.classList.remove('classic', 'futuristic', 'minimal')
+    // Add the selected design class
+    document.body.classList.add(design)
   }, [design])
 
   const getStatusColor = (status) => {
