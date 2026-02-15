@@ -1,95 +1,160 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 
-const agents = [
-  { name: 'Jason', role: 'Security', status: 'online', color: '#10b981' },
-  { name: 'Kaizen', role: 'Optimization', status: 'online', color: '#3b82f6' },
-  { name: 'Daedalus', role: 'Skills', status: 'online', color: '#8b5cf6' },
-  { name: 'Merlin', role: 'Advisor', status: 'online', color: '#f59e0b' },
-  { name: 'Marc', role: 'iOS Dev', status: 'waiting', color: '#ef4444' },
-  { name: 'Ada', role: 'Research', status: 'online', color: '#06b6d4' },
-  { name: 'Da Vinci', role: 'Design', status: 'waiting', color: '#ec4899' },
-]
-
-const deployments = [
-  { name: 'hello-world-test', url: 'https://test-app-seven-black.vercel.app', status: 'live', time: '2 min ago' },
-  { name: 'dashboard-v1', url: '-', status: 'planned', time: '-' },
-]
-
-const quickActions = [
-  { name: '🚀 New Deployment', action: 'deploy' },
-  { name: '🔍 Run Research', action: 'research' },
-  { name: '📊 Generate Report', action: 'report' },
-  { name: '⚙️ Run Optimization', action: 'optimize' },
-]
-
 function App() {
+  const [data, setData] = useState(null)
   const [time, setTime] = useState(new Date())
+
+  useEffect(() => {
+    fetch('/data.json')
+      .then(res => res.json())
+      .then(setData)
+      .catch(console.error)
+  }, [])
 
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000)
     return () => clearInterval(timer)
   }, [])
 
+  const getStatusColor = (status) => {
+    switch(status) {
+      case 'online': return '#10b981'
+      case 'waiting': return '#f59e0b'
+      case 'error': return '#ef4444'
+      default: return '#6b7280'
+    }
+  }
+
+  const getProjectStatusColor = (status) => {
+    switch(status) {
+      case 'research': return '#3b82f6'
+      case 'live': return '#10b981'
+      case 'planned': return '#8b5cf6'
+      case 'waiting': return '#f59e0b'
+      default: return '#6b7280'
+    }
+  }
+
+  if (!data) return <div className="loading">Loading...</div>
+
   return (
     <div className="dashboard">
       <header>
-        <h1>🦞 Archi's Dashboard</h1>
-        <div className="time">{time.toLocaleTimeString('de-DE')}</div>
+        <div className="header-left">
+          <h1>🦞 Archi's Dashboard</h1>
+          <span className="subtitle">OpenClaw Control Center</span>
+        </div>
+        <div className="header-right">
+          <div className="time">{time.toLocaleTimeString('de-DE')}</div>
+          <div className="date">{time.toLocaleDateString('de-DE')}</div>
+        </div>
       </header>
 
       <main>
+        <section className="stats">
+          <div className="stat-card">
+            <span className="stat-value">{data.stats.activeAgents}</span>
+            <span className="stat-label">Active Agents</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-value">{data.stats.waitingAgents}</span>
+            <span className="stat-label">Waiting</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-value">{data.stats.skillsInstalled}</span>
+            <span className="stat-label">Skills</span>
+          </div>
+          <div className="stat-card">
+            <span className="stat-value">{data.stats.totalDeployments}</span>
+            <span className="stat-label">Deployments</span>
+          </div>
+        </section>
+
         <section className="agents">
           <h2>🛡️ Ritter Status</h2>
           <div className="agent-grid">
-            {agents.map(agent => (
+            {data.agents.map(agent => (
               <div key={agent.name} className="agent-card">
-                <div className="agent-avatar" style={{ background: agent.color }}>
+                <div 
+                  className="agent-avatar" 
+                  style={{ background: getStatusColor(agent.status) }}
+                >
                   {agent.name[0]}
                 </div>
                 <div className="agent-info">
                   <h3>{agent.name}</h3>
-                  <p>{agent.role}</p>
+                  <p className="role">{agent.role}</p>
+                  <p className="report">{agent.lastReport}</p>
                 </div>
-                <div className={`status ${agent.status}`}>
-                  {agent.status === 'online' ? '✅' : '⏳'}
+                <div className="agent-meta">
+                  <span className={`status-badge ${agent.status}`}>
+                    {agent.status === 'online' ? '🟢' : '🟡'}
+                  </span>
+                  <span className="time">{agent.time}</span>
                 </div>
               </div>
             ))}
           </div>
         </section>
 
-        <section className="deployments">
-          <h2>🚀 Letzte Deployments</h2>
-          <div className="deploy-list">
-            {deployments.map(deploy => (
-              <div key={deploy.name} className="deploy-card">
-                <div className="deploy-info">
-                  <h3>{deploy.name}</h3>
-                  <a href={deploy.url} target="_blank" rel="noreferrer">{deploy.url}</a>
+        <div className="two-col">
+          <section className="deployments">
+            <h2>🚀 Deployments</h2>
+            <div className="deploy-list">
+              {data.deployments.map(deploy => (
+                <div key={deploy.name} className="deploy-card">
+                  <div className="deploy-info">
+                    <h3>{deploy.name}</h3>
+                    <a href={deploy.url} target="_blank" rel="noreferrer">{deploy.url}</a>
+                  </div>
+                  <div className="deploy-meta">
+                    <span className={`deploy-status ${deploy.status}`}>
+                      {deploy.status === 'live' ? '🟢 Live' : '🟡 Planned'}
+                    </span>
+                    <span className="time">{deploy.time}</span>
+                  </div>
                 </div>
-                <div className={`deploy-status ${deploy.status}`}>
-                  {deploy.status === 'live' ? '🟢 Live' : '🟡 Planned'}
+              ))}
+            </div>
+          </section>
+
+          <section className="projects">
+            <h2>📁 Projekte</h2>
+            <div className="project-list">
+              {data.projects.map(project => (
+                <div key={project.name} className="project-card">
+                  <div className="project-info">
+                    <h3>{project.name}</h3>
+                    <p>{project.description}</p>
+                  </div>
+                  <span 
+                    className="project-status"
+                    style={{ background: getProjectStatusColor(project.status) }}
+                  >
+                    {project.status}
+                  </span>
                 </div>
-              </div>
-            ))}
-          </div>
-        </section>
+              ))}
+            </div>
+          </section>
+        </div>
 
         <section className="actions">
           <h2>⚡ Quick Actions</h2>
           <div className="action-grid">
-            {quickActions.map(action => (
-              <button key={action.action} className="action-btn">
-                {action.name}
-              </button>
-            ))}
+            <button className="action-btn">🚀 New Deployment</button>
+            <button className="action-btn">🔍 Run Research</button>
+            <button className="action-btn">📊 Generate Report</button>
+            <button className="action-btn">⚙️ Optimization</button>
+            <button className="action-btn">🛡️ Security Scan</button>
+            <button className="action-btn">🎵 KI-Band Check</button>
           </div>
         </section>
       </main>
 
       <footer>
-        <p>OpenClaw Dashboard • Version 1.0</p>
+        <p>🦞 Archi's Dashboard • Letzte Aktualisierung: {new Date(data.lastUpdate).toLocaleString('de-DE')}</p>
       </footer>
     </div>
   )
