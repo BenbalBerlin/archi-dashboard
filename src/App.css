@@ -1,0 +1,167 @@
+:root {
+  --bg: #0f172a;
+  --card-bg: #1e293b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --accent: #3b82f6;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #334155;
+}
+
+header h1 {
+  font-size: 2rem;
+}
+
+.time {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--accent);
+}
+
+main {
+  display: grid;
+  gap: 2rem;
+}
+
+section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  color: var(--text-muted);
+}
+
+.agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.agent-card {
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.agent-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 1.25rem;
+  color: white;
+}
+
+.agent-info h3 {
+  font-size: 1rem;
+}
+
+.agent-info p {
+  font-size: 0.875rem;
+  color: var(--text-muted);
+}
+
+.status {
+  margin-left: auto;
+  font-size: 1.5rem;
+}
+
+.deploy-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.deploy-card {
+  background: var(--card-bg);
+  padding: 1rem;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.deploy-info h3 {
+  font-size: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+.deploy-info a {
+  color: var(--accent);
+  font-size: 0.875rem;
+}
+
+.deploy-status {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-weight: bold;
+}
+
+.deploy-status.live {
+  background: #065f46;
+  color: #34d399;
+}
+
+.deploy-status.planned {
+  background: #713f12;
+  color: #fbbf24;
+}
+
+.action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 1rem;
+}
+
+.action-btn {
+  background: var(--accent);
+  color: white;
+  border: none;
+  padding: 1rem;
+  border-radius: 12px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  opacity: 0.9;
+}
+
+footer {
+  margin-top: 3rem;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
