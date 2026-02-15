@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react'
+import './styles/classic.css'
 import './App.css'
 
 function App() {
   const [data, setData] = useState(null)
   const [time, setTime] = useState(new Date())
+  const [design, setDesign] = useState('classic')
 
   useEffect(() => {
     fetch('/data.json')
@@ -16,6 +18,10 @@ function App() {
     const timer = setInterval(() => setTime(new Date()), 1000)
     return () => clearInterval(timer)
   }, [])
+
+  useEffect(() => {
+    document.body.className = design
+  }, [design])
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -46,8 +52,27 @@ function App() {
           <span className="subtitle">OpenClaw Control Center</span>
         </div>
         <div className="header-right">
+          <div className="design-toggle">
+            <button 
+              className={design === 'classic' ? 'active' : ''} 
+              onClick={() => setDesign('classic')}
+            >
+              Classic
+            </button>
+            <button 
+              className={design === 'futuristic' ? 'active' : ''} 
+              onClick={() => setDesign('futuristic')}
+            >
+              Futuristic
+            </button>
+            <button 
+              className={design === 'minimal' ? 'active' : ''} 
+              onClick={() => setDesign('minimal')}
+            >
+              Minimal
+            </button>
+          </div>
           <div className="time">{time.toLocaleTimeString('de-DE')}</div>
-          <div className="date">{time.toLocaleDateString('de-DE')}</div>
         </div>
       </header>
 
