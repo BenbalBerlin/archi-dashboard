@@ -1,5 +1,5 @@
 {
-  "lastUpdate": "2026-02-15T13:00:00Z",
+  "lastUpdate": "2026-02-15T13:30:00Z",
   "agents": [
     { "name": "Jason", "role": "Security", "status": "online", "lastReport": "Alles sicher", "time": "03:00" },
     { "name": "Kaizen", "role": "Optimization", "status": "online", "lastReport": "QMD Index + Agent Browser installiert", "time": "04:00" },
@@ -23,6 +23,12 @@
     "totalDeployments": 2,
     "activeAgents": 5,
     "waitingAgents": 2,
-    "skillsInstalled": 54
+    "skillsInstalled": 54,
+    "uptime": "99.9%",
+    "apiCalls": 1247
+  },
+  "actions": {
+    "lastAction": null,
+    "pending": []
   }
 }

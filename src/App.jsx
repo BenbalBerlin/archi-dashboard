@@ -8,25 +8,43 @@ function App() {
   const [data, setData] = useState(null)
   const [time, setTime] = useState(new Date())
   const [design, setDesign] = useState('classic')
+  const [actionStatus, setActionStatus] = useState(null)
 
+  // Fetch data every 30 seconds
   useEffect(() => {
-    fetch('/data.json')
-      .then(res => res.json())
-      .then(setData)
-      .catch(console.error)
+    fetchData()
+    const interval = setInterval(fetchData, 30000)
+    return () => clearInterval(interval)
   }, [])
 
+  // Update clock every second
   useEffect(() => {
     const timer = setInterval(() => setTime(new Date()), 1000)
     return () => clearInterval(timer)
   }, [])
 
+  // Apply design class
   useEffect(() => {
-    // Remove all design classes first
     document.body.classList.remove('classic', 'futuristic', 'minimal')
-    // Add the selected design class
     document.body.classList.add(design)
   }, [design])
+
+  const fetchData = () => {
+    fetch('/data.json')
+      .then(res => res.json())
+      .then(setData)
+      .catch(console.error)
+  }
+
+  const handleAction = async (action) => {
+    setActionStatus({ action, status: 'loading' })
+    
+    // Simulate action - in real version this would call an API
+    await new Promise(r => setTimeout(r, 1000))
+    
+    setActionStatus({ action, status: 'done' })
+    setTimeout(() => setActionStatus(null), 2000)
+  }
 
   const getStatusColor = (status) => {
     switch(status) {
@@ -77,7 +95,10 @@ function App() {
               Minimal
             </button>
           </div>
-          <div className="time">{time.toLocaleTimeString('de-DE')}</div>
+          <div className="time-display">
+            <div className="time">{time.toLocaleTimeString('de-DE')}</div>
+            <div className="date">{time.toLocaleDateString('de-DE')}</div>
+          </div>
         </div>
       </header>
 
@@ -96,8 +117,8 @@ function App() {
             <span className="stat-label">Skills</span>
           </div>
           <div className="stat-card">
-            <span className="stat-value">{data.stats.totalDeployments}</span>
-            <span className="stat-label">Deployments</span>
+            <span className="stat-value">{data.stats.uptime}</span>
+            <span className="stat-label">Uptime</span>
           </div>
         </section>
 
@@ -173,18 +194,55 @@ function App() {
         <section className="actions">
           <h2>⚡ Quick Actions</h2>
           <div className="action-grid">
-            <button className="action-btn">🚀 New Deployment</button>
-            <button className="action-btn">🔍 Run Research</button>
-            <button className="action-btn">📊 Generate Report</button>
-            <button className="action-btn">⚙️ Optimization</button>
-            <button className="action-btn">🛡️ Security Scan</button>
-            <button className="action-btn">🎵 KI-Band Check</button>
+            <button 
+              className={`action-btn ${actionStatus?.action === 'deploy' ? 'loading' : ''}`}
+              onClick={() => handleAction('deploy')}
+              disabled={actionStatus?.status === 'loading'}
+            >
+              {actionStatus?.action === 'deploy' && actionStatus.status === 'loading' ? '⏳...' : '🚀 New Deployment'}
+            </button>
+            <button 
+              className={`action-btn ${actionStatus?.action === 'research' ? 'loading' : ''}`}
+              onClick={() => handleAction('research')}
+              disabled={actionStatus?.status === 'loading'}
+            >
+              {actionStatus?.action === 'research' && actionStatus.status === 'loading' ? '⏳...' : '🔍 Run Research'}
+            </button>
+            <button 
+              className={`action-btn ${actionStatus?.action === 'report' ? 'loading' : ''}`}
+              onClick={() => handleAction('report')}
+              disabled={actionStatus?.status === 'loading'}
+            >
+              {actionStatus?.action === 'report' && actionStatus.status === 'loading' ? '⏳...' : '📊 Generate Report'}
+            </button>
+            <button 
+              className={`action-btn ${actionStatus?.action === 'optimize' ? 'loading' : ''}`}
+              onClick={() => handleAction('optimize')}
+              disabled={actionStatus?.status === 'loading'}
+            >
+              {actionStatus?.action === 'optimize' && actionStatus.status === 'loading' ? '⏳...' : '⚙️ Optimization'}
+            </button>
+            <button 
+              className={`action-btn ${actionStatus?.action === 'security' ? 'loading' : ''}`}
+              onClick={() => handleAction('security')}
+              disabled={actionStatus?.status === 'loading'}
+            >
+              {actionStatus?.action === 'security' && actionStatus.status === 'loading' ? '⏳...' : '🛡️ Security Scan'}
+            </button>
+            <button 
+              className={`action-btn ${actionStatus?.action === 'kiband' ? 'loading' : ''}`}
+              onClick={() => handleAction('kiband')}
+              disabled={actionStatus?.status === 'loading'}
+            >
+              {actionStatus?.action === 'kiband' && actionStatus.status === 'loading' ? '⏳...' : '🎵 KI-Band Check'}
+            </button>
           </div>
         </section>
       </main>
 
       <footer>
         <p>🦞 Archi's Dashboard • Letzte Aktualisierung: {new Date(data.lastUpdate).toLocaleString('de-DE')}</p>
+        <p className="refresh-info">🔄 Auto-refresh alle 30 Sekunden</p>
       </footer>
     </div>
   )
