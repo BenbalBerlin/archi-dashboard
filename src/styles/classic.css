@@ -11,9 +11,24 @@ body.classic {
   --text-muted: #94a3b8;
   --accent: #3b82f6;
   --accent-hover: #2563eb;
+  --glow: rgba(59, 130, 246, 0.3);
 }
 
 body.classic {
   background: var(--bg);
   color: var(--text);
+}
+
+/* Card hover animations */
+body.classic .agent-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 40px var(--glow);
+}
+
+body.classic .stat-card:hover {
+  transform: scale(1.02);
+}
+
+body.classic .action-btn:active {
+  transform: scale(0.95);
 }

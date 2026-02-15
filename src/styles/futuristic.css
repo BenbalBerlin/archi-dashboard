@@ -5,7 +5,7 @@
 body.futuristic {
   --bg: #050510;
   --card-bg: rgba(20, 20, 40, 0.7);
-  --card-bg-hover: rgba(30, 30, 60, 0.8);
+  --card-bg-hover: rgba(40, 40, 80, 0.8);
   --card-border: rgba(100, 100, 255, 0.2);
   --text: #e0e0ff;
   --text-muted: #8888aa;
@@ -13,6 +13,7 @@ body.futuristic {
   --accent-hover: #818cf8;
   --success: #22d3ee;
   --warning: #f472b6;
+  --glow: rgba(99, 102, 241, 0.4);
 }
 
 body.futuristic {
@@ -23,19 +24,48 @@ body.futuristic {
   background-color: var(--bg);
 }
 
+/* Neon glow effects */
 body.futuristic .stat-value,
 body.futuristic header h1 {
   background: linear-gradient(135deg, #6366f1, #22d3ee);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  text-shadow: 0 0 30px var(--glow);
 }
 
 body.futuristic .agent-avatar {
-  box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+  box-shadow: 0 0 20px var(--glow), 0 0 40px var(--glow);
+  animation: pulse-glow 2s infinite;
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 20px var(--glow); }
+  50% { box-shadow: 0 0 30px var(--glow), 0 0 50px var(--glow); }
 }
 
 body.futuristic .time {
   color: var(--success);
-  text-shadow: 0 0 10px var(--success);
+  text-shadow: 0 0 10px var(--success), 0 0 20px var(--success);
+}
+
+/* Futuristic card hover */
+body.futuristic .agent-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0 40px var(--glow), 0 20px 60px rgba(0, 0, 0, 0.5);
+  border-color: var(--accent);
+}
+
+body.futuristic .stat-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 30px var(--glow);
+}
+
+/* Action button glow */
+body.futuristic .action-btn:hover {
+  box-shadow: 0 0 30px var(--glow), 0 0 60px var(--glow);
+}
+
+body.futuristic .action-btn:active {
+  transform: scale(0.95);
 }
